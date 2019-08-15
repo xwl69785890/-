@@ -1,0 +1,16 @@
+1.下载yum源
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+2.安装ntfs-3g
+yum -y install ntfs-3g 
+检查ntfs-3g是否安装成功
+yum list installed | grep ntfs-3g
+临时挂载ntfs文件系统
+mount -t ntfs-3g /dev/sdc1 /mnt   #-t指定挂载格式(必须加)
+5.如果想随时插上U盘或移动硬盘就可以自动挂载，就好像Windows下使用那样的效果:
+a.在/sbin目录下新建一个脚本 vi /sbin/mount.ntfs
+#!/bin/sh
+export LANG=Zh_CN.UTF-8
+exec /sbin/mount.ntfs-3g $@
+b.保存退出，并且给脚本添加一个可执行权限
+chmod a+x /sbin/mount.ntfs
+然后你再自动插拔你的移动硬盘就可以了
